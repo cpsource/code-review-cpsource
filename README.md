@@ -7,31 +7,6 @@ Forked from [code-review-excellence](https://github.com/awesome-skills/code-revi
 and improved based on real false-positive failures found during a review of
 wolfSSL's `src/ssl_sk.c`.
 
-## What changed from the original
-
-The original skill produced a false positive — it flagged intentional LIFO
-pop semantics as a high-severity bug because it didn't cross-reference the
-test suite. This fork adds:
-
-- **Mandatory verification phase (Phase 3.5)** — every suspected bug must be
-  checked against tests, callers, and concrete execution traces before being
-  reported as a finding
-- **20-section C/C++ master checklist** — correctness, memory safety, resource
-  management, UB, concurrency, security, input validation, error handling, API
-  design, C-specific, C++-specific, performance, portability, style,
-  maintainability, testability, logging, build, backward compatibility, risk
-- **Compact 10-question review prompt** — what can crash, corrupt memory, leak,
-  be exploited, deadlock, trigger UB, hurt maintainability, and what tests are
-  missing
-- **4-bucket severity system** — Critical, Major, Minor, Questions/Assumptions
-- **Expanded C guide** (~1,200 lines) — NULL deref, off-by-one, double free,
-  use-after-free, `#ifdef` pitfalls, cast safety, format strings, security,
-  input validation, portability, performance
-- **Expanded C++ guide** (~740 lines) — virtual destructors, composition vs
-  inheritance, noexcept/constexpr, null/unchecked access, cast safety, expanded
-  concurrency (lock ordering, check-then-act, condition variables)
-- **Always-on C/C++ checks** — 10 mandatory items even in a quick review
-
 ## Installation
 
 ```bash
