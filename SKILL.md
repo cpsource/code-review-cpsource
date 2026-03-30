@@ -12,11 +12,19 @@ allowed-tools:
   - Read
   - Grep
   - Glob
-  - Bash      # 运行 lint/test/build 命令验证代码质量
-  - WebFetch  # 查阅最新文档和最佳实践
+  - Bash
+  - WebFetch
 ---
 
-# Code Review Excellence
+# code-review-cpsource
+
+## Overview
+
+Structured code review skill with a mandatory verification phase and a
+20-section C/C++ master checklist. Covers 11+ languages. Every suspected
+bug must be cross-referenced against tests and callers before being reported.
+
+## Instructions
 
 Transform code reviews from gatekeeping to knowledge sharing through constructive feedback, systematic analysis, and collaborative improvement.
 
@@ -104,10 +112,10 @@ Before diving into code, understand:
 ### Phase 2: High-Level Review (5-10 minutes)
 
 1. **Architecture & Design** - Does the solution fit the problem?
-   - For significant changes, consult [Architecture Review Guide](reference/architecture-review-guide.md)
+   - For significant changes, consult [Architecture Review Guide](references/architecture-review-guide.md)
    - Check: SOLID principles, coupling/cohesion, anti-patterns
 2. **Performance Assessment** - Are there performance concerns?
-   - For performance-critical code, consult [Performance Review Guide](reference/performance-review-guide.md)
+   - For performance-critical code, consult [Performance Review Guide](references/performance-review-guide.md)
    - Check: Algorithm complexity, N+1 queries, memory usage
 3. **File Organization** - Are new files in the right places?
 4. **Testing Strategy** - Are there tests covering edge cases?
@@ -186,7 +194,7 @@ credibility and waste the author's time.
 
 ### Technique 1: The Checklist Method
 
-Use checklists for consistent reviews. See [Security Review Guide](reference/security-review-guide.md) for comprehensive security checklist.
+Use checklists for consistent reviews. See [Security Review Guide](references/security-review-guide.md) for comprehensive security checklist.
 
 ### Technique 2: The Question Approach
 
@@ -266,39 +274,56 @@ skip them regardless of time pressure:
 ### C/C++ Section Framework
 
 For C and C++ reviews, the review MUST walk through all 20 sections of the
-[C/C++ Master Checklist](reference/c-cpp-master-checklist.md). Report findings
+[C/C++ Master Checklist](references/c-cpp-master-checklist.md). Report findings
 under the section headings so nothing is missed. Sections with no findings
 should be noted as clean.
 
 See the language-specific guides for detailed patterns and examples:
-- [C Guide](reference/c.md) — memory safety, UB, conditional compilation, format strings
-- [C++ Guide](reference/cpp.md) — RAII, lifetime, move semantics, templates
+- [C Guide](references/c.md) — memory safety, UB, conditional compilation, format strings
+- [C++ Guide](references/cpp.md) — RAII, lifetime, move semantics, templates
 
 ## Language-Specific Guides
 
-根据审查的代码语言，查阅对应的详细指南：
+Load the relevant guide based on the code language being reviewed:
 
 | Language/Framework | Reference File | Key Topics |
 |-------------------|----------------|------------|
-| **React** | [React Guide](reference/react.md) | Hooks, useEffect, React 19 Actions, RSC, Suspense, TanStack Query v5 |
-| **Vue 3** | [Vue Guide](reference/vue.md) | Composition API, 响应性系统, Props/Emits, Watchers, Composables |
-| **Rust** | [Rust Guide](reference/rust.md) | 所有权/借用, Unsafe 审查, 异步代码, 错误处理 |
-| **TypeScript** | [TypeScript Guide](reference/typescript.md) | 类型安全, async/await, 不可变性 |
-| **Python** | [Python Guide](reference/python.md) | 可变默认参数, 异常处理, 类属性 |
-| **Java** | [Java Guide](reference/java.md) | Java 17/21 新特性, Spring Boot 3, 虚拟线程, Stream/Optional |
-| **Go** | [Go Guide](reference/go.md) | 错误处理, goroutine/channel, context, 接口设计 |
-| **C** | [C Guide](reference/c.md) | 指针/缓冲区, 内存安全, UB, 错误处理 |
-| **C++** | [C++ Guide](reference/cpp.md) | RAII, 生命周期, Rule of 0/3/5, 异常安全 |
-| **CSS/Less/Sass** | [CSS Guide](reference/css-less-sass.md) | 变量规范, !important, 性能优化, 响应式, 兼容性 |
-| **Qt** | [Qt Guide](reference/qt.md) | 对象模型, 信号/槽, 内存管理, 线程安全, 性能 |
+| **React** | [React Guide](references/react.md) | Hooks, useEffect, React 19 Actions, RSC, Suspense, TanStack Query v5 |
+| **Vue 3** | [Vue Guide](references/vue.md) | Composition API, reactivity, Props/Emits, Watchers, Composables |
+| **Rust** | [Rust Guide](references/rust.md) | Ownership/borrowing, unsafe review, async, error handling |
+| **TypeScript** | [TypeScript Guide](references/typescript.md) | Type safety, async/await, immutability |
+| **Python** | [Python Guide](references/python.md) | Mutable defaults, exception handling, class attributes |
+| **Java** | [Java Guide](references/java.md) | Java 17/21, Spring Boot 3, virtual threads, Stream/Optional |
+| **Go** | [Go Guide](references/go.md) | Error handling, goroutine/channel, context, interface design |
+| **C** | [C Guide](references/c.md) | Pointers/buffers, memory safety, UB, error handling |
+| **C++** | [C++ Guide](references/cpp.md) | RAII, lifetime, Rule of 0/3/5, exception safety |
+| **CSS/Less/Sass** | [CSS Guide](references/css-less-sass.md) | Variables, !important, performance, responsive, compatibility |
+| **Qt** | [Qt Guide](references/qt.md) | Object model, signals/slots, memory management, thread safety |
 
 ## Additional Resources
 
-- [C/C++ Master Checklist](reference/c-cpp-master-checklist.md) - 20-section mandatory checklist for C/C++ reviews
-- [Architecture Review Guide](reference/architecture-review-guide.md) - 架构设计审查指南（SOLID、反模式、耦合度）
-- [Performance Review Guide](reference/performance-review-guide.md) - 性能审查指南（Web Vitals、N+1、复杂度）
-- [Common Bugs Checklist](reference/common-bugs-checklist.md) - 按语言分类的常见错误清单
-- [Security Review Guide](reference/security-review-guide.md) - 安全审查指南
-- [Code Review Best Practices](reference/code-review-best-practices.md) - 代码审查最佳实践
-- [PR Review Template](assets/pr-review-template.md) - PR 审查评论模板
-- [Review Checklist](assets/review-checklist.md) - 快速参考清单
+- [C/C++ Master Checklist](references/c-cpp-master-checklist.md) - 20-section mandatory checklist for C/C++ reviews
+- [Architecture Review Guide](references/architecture-review-guide.md) - SOLID, anti-patterns, coupling/cohesion
+- [Performance Review Guide](references/performance-review-guide.md) - Web Vitals, N+1, complexity
+- [Common Bugs Checklist](references/common-bugs-checklist.md) - Language-specific bug patterns
+- [Security Review Guide](references/security-review-guide.md) - Security checklist (all languages)
+- [Code Review Best Practices](references/code-review-best-practices.md) - Communication and process guidelines
+- [PR Review Template](assets/pr-review-template.md) - PR review comment template
+- [Review Checklist](assets/review-checklist.md) - Quick reference checklist
+
+## Examples
+
+### Example Input
+
+```
+/code-review-cpsource code review src/ssl_sk.c
+```
+
+### Example Output
+
+The skill produces a structured report with:
+1. Compact 10-question summary table (what can crash, corrupt, leak, etc.)
+2. Section-by-section findings under all 20 checklist headings
+3. Each finding labeled Critical, Major, Minor, or Question
+4. Verification evidence (test references, caller analysis) for each bug
+5. Final summary table with counts by severity

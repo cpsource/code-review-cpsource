@@ -58,20 +58,20 @@ Once installed, invoke it from the Claude Code prompt:
 
 | Category | Language/Framework | Guide | Key topics |
 |----------|--------------------|-------|------------|
-| **Systems** | C | `reference/c.md` | Memory safety, UB, NULL deref, off-by-one, `#ifdef`, format strings, portability |
-| | C++ | `reference/cpp.md` | RAII, lifetime, move/copy, virtual dtors, composition, noexcept, concurrency |
-| | Qt | `reference/qt.md` | Object model, signals/slots, thread safety |
-| **Frontend** | React 19 | `reference/react.md` | Hooks, Server Components, Suspense, TanStack Query v5 |
-| | Vue 3 | `reference/vue.md` | Composition API, reactivity, composables |
-| | TypeScript | `reference/typescript.md` | Type safety, async/await, immutability |
-| | CSS/Less/Sass | `reference/css-less-sass.md` | Variables, responsive, performance |
-| **Backend** | Java 17/21 | `reference/java.md` | Spring Boot 3, virtual threads, JPA |
-| | Python | `reference/python.md` | Mutable defaults, async, typing |
-| | Go | `reference/go.md` | Goroutines, channels, context, interfaces |
-| | Rust | `reference/rust.md` | Ownership, unsafe, async, error handling |
-| **Cross-cutting** | Architecture | `reference/architecture-review-guide.md` | SOLID, anti-patterns, coupling |
-| | Performance | `reference/performance-review-guide.md` | Web Vitals, N+1, complexity |
-| | Security | `reference/security-review-guide.md` | All-language security checklist |
+| **Systems** | C | `references/c.md` | Memory safety, UB, NULL deref, off-by-one, `#ifdef`, format strings, portability |
+| | C++ | `references/cpp.md` | RAII, lifetime, move/copy, virtual dtors, composition, noexcept, concurrency |
+| | Qt | `references/qt.md` | Object model, signals/slots, thread safety |
+| **Frontend** | React 19 | `references/react.md` | Hooks, Server Components, Suspense, TanStack Query v5 |
+| | Vue 3 | `references/vue.md` | Composition API, reactivity, composables |
+| | TypeScript | `references/typescript.md` | Type safety, async/await, immutability |
+| | CSS/Less/Sass | `references/css-less-sass.md` | Variables, responsive, performance |
+| **Backend** | Java 17/21 | `references/java.md` | Spring Boot 3, virtual threads, JPA |
+| | Python | `references/python.md` | Mutable defaults, async, typing |
+| | Go | `references/go.md` | Goroutines, channels, context, interfaces |
+| | Rust | `references/rust.md` | Ownership, unsafe, async, error handling |
+| **Cross-cutting** | Architecture | `references/architecture-review-guide.md` | SOLID, anti-patterns, coupling |
+| | Performance | `references/performance-review-guide.md` | Web Vitals, N+1, complexity |
+| | Security | `references/security-review-guide.md` | All-language security checklist |
 
 ## Review process
 
@@ -98,7 +98,7 @@ Phase 4 - Summary & Decision
 ```
 
 For C/C++ reviews, the skill walks through all 20 sections of the
-[master checklist](reference/c-cpp-master-checklist.md) and answers the
+[master checklist](references/c-cpp-master-checklist.md) and answers the
 compact 10-question prompt.
 
 ## Severity buckets
@@ -120,7 +120,7 @@ code-review-cpsource/
 +-- LICENSE
 +-- CONTRIBUTING.md
 |
-+-- reference/
++-- references/
 |   +-- c-cpp-master-checklist.md         # 20-section mandatory C/C++ checklist
 |   +-- c.md                              # C review guide (~1,200 lines)
 |   +-- cpp.md                            # C++ review guide (~740 lines)
