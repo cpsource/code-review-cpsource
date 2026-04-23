@@ -43,6 +43,10 @@
 - [ ] Are destructors, cleanup blocks, or defer-like patterns reliable?
 - [ ] Are acquisition and release paired consistently?
 - [ ] Are cleanup routines idempotent where needed?
+- [ ] **Retry loops (`goto try_again` / `continue` across cleanup):** after
+  each `close` / `free` / `destroy` in the cleanup block, is the handle
+  set to NULL so the next iteration doesn't touch a stale pointer if the
+  retry's setup fails? (See `c.md` §Double-Free, Pattern 4.)
 
 ## 4. Undefined Behavior and Implementation Traps
 

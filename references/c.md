@@ -421,6 +421,68 @@ if (err) {
 free(buf); // double free when err is true
 ```
 
+### Pattern 4: Retry loops that don't NULL after close/free
+
+Common in code that retries transient failures (EINTR, EAGAIN, network
+reset). A shared `goto cleanup` → `goto try_again` structure closes a
+handle in cleanup but does not NULL it. On the next iteration the setup
+code runs again, but the cleanup-side `if (handle)` guard is still true
+from the prior round if the reopen fails and control reaches cleanup
+again — double-close or UAF via stale handle.
+
+```c
+// ? Bad: nlg is closed but not NULLed; try_again reuses the stale value
+static int do_netlink_op(void)
+{
+    struct mnlg_socket *nlg;
+    int ret;
+
+try_again:
+    ret = 0;
+    nlg = mnlg_socket_open(...);
+    if (!nlg)
+        return -errno;
+
+    if (mnlg_socket_send(nlg, ...) < 0) {
+        ret = -errno;
+        goto out;
+    }
+
+out:
+    if (nlg)
+        mnlg_socket_close(nlg);      // nlg closed but still non-NULL
+    if (ret == -EINTR)
+        goto try_again;               // loops back; nlg is now a dangling
+    if (ret) {                        // pointer but the `if (nlg)` check
+        ...                           // above would pass on a second out:
+    }
+    return ret;
+}
+
+// ? Good: NULL the handle immediately after close
+out:
+    if (nlg) {
+        mnlg_socket_close(nlg);
+        nlg = NULL;
+    }
+    if (ret == -EINTR)
+        goto try_again;
+    ...
+```
+
+The stale-pointer risk is subtle: in the *straightforward* `try_again`
+flow (open → send fails → cleanup → retry), the stale `nlg` gets
+overwritten by the next `mnlg_socket_open()`. The bug shows up on the
+path where the retry's `mnlg_socket_open()` itself fails — now the
+stale pointer survives, and if any later path revisits `out:` (or an
+enclosing cleanup block that also checks `nlg`), we call
+`mnlg_socket_close` on a freed pointer.
+
+Real-world example: [wolfSSL/wolfGuard PR
+#20](https://github.com/wolfSSL/wolfGuard/pull/20) fixed exactly this
+in `kernel_generate_privkey`, `kernel_derive_pubkey`, and
+`kernel_generate_psk`.
+
 ### What to look for during review
 
 - Every `goto cleanup`: does the cleanup section free something that was
@@ -429,6 +491,11 @@ free(buf); // double free when err is true
   memory?
 - After freeing: is the pointer set to NULL? (`free(p); p = NULL;`)
 - `free(NULL)` is safe in C — NULLing after free prevents double-free bugs.
+- **Every `goto retry`/`goto try_again` across a cleanup block**: after
+  each `close` / `free` / `destroy`, is the handle NULLed so the next
+  iteration's cleanup doesn't touch stale memory? This check is easy
+  to miss because the common code path happens to work — the bug is on
+  the secondary-failure arm.
 
 ---
 
