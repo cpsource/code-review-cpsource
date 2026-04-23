@@ -172,6 +172,27 @@ credibility and waste the author's time.
    find tests or callers that exercise this path. Needs manual confirmation.
    ```
 
+6. **Check whether the finding was already reported.** Before writing up a
+   finding, search the project's existing PRs and issues for prior reports or
+   fixes of the same problem. A finding already covered upstream should be
+   cited (with link) rather than re-reported as new. This avoids duplicate
+   noise and surfaces prior discussion, proposed patches, or reasons the issue
+   was deferred.
+
+   ```
+   # GitHub CLI — search open and closed PRs/issues
+   gh pr list --state all --search "<keyword or function name>"
+   gh issue list --state all --search "<keyword or function name>"
+   # Also grep the local tree for TODO/FIXME/XXX referencing the same area
+   grep -rn -E "TODO|FIXME|XXX" <path>
+   ```
+
+   If a prior PR or issue exists, note it in the finding:
+   ```
+   Previously reported in #1234 (open) / fixed in #1250 — verify the
+   current branch includes that fix or is tracking the open discussion.
+   ```
+
 **What NOT to do:**
 - Do not report a function as buggy based solely on reading its implementation
   without checking how it is actually called
